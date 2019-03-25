@@ -11,7 +11,6 @@ public class MaxContribution {
 
 	static long mcnt = 0;
 	static long cnt = 0;
-	static long cnt1 = 0;
 
 	public MaxContribution() {
 
