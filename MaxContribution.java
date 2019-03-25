@@ -11,9 +11,10 @@ public class MaxContribution {
 
 	static long mcnt = 0;
 	static long cnt = 0;
+	static long cnt1 = 0;
 
 	public MaxContribution() {
-		
+
 	}
 
 	public static void main(String[] args) {
@@ -47,7 +48,7 @@ public class MaxContribution {
 				51, 69, 7, 15, 31, 46, 19, 72, 5, 61, 35, 17, 18, 42, 15, 12, 51, 67, 39, 78, 85, 12, 31, 67, 28, 34 };
 		backEndDev = new int[] { 7, 15, 31, 46, 19, 72, 5, 61, 35, 17, 18, 42, 15, 12, 51, 67, 39, 78, 85, 12, 31, 67,
 				28, 34, 6, 12, 19, 71, 42, 51, 12, 19, 15, 16, 41, 32, 9, 11, 12, 13, 19, 21, 71, 16, 78, 84, 51, 69 };
-		fontEndDevsCount = 31;
+		fontEndDevsCount = 3;
 
 		Date start = null;
 		Date end = null;
@@ -55,7 +56,6 @@ public class MaxContribution {
 		Map<String, Object> response = new HashMap<>();
 
 		int maxContribution = 0;
-		int memMaxCont = 0;
 		if (frontEndDev.length == fontEndDevsCount)
 			maxContribution = Arrays.stream(frontEndDev).sum();
 		else if (fontEndDevsCount == 0)
@@ -70,11 +70,11 @@ public class MaxContribution {
 			diff.put("iterationCount", 0L);
 
 			start = new Date();
-			memMaxCont = new MaxContribution().memMaxContribution(frontEndDev, backEndDev, fontEndDevsCount,
+			maxContribution = new MaxContribution().memMaxContribution(frontEndDev, backEndDev, fontEndDevsCount,
 					frontEndDev.length, new HashMap<Integer, Integer>());
 			end = new Date();
 			Map<String, Long> memoized = new HashMap<>();
-			memoized.put("maxContribution", (long) memMaxCont);
+			memoized.put("maxContribution", (long) maxContribution);
 			memoized.put("time", end.getTime() - start.getTime());
 			memoized.put("iterationCount", mcnt);
 
@@ -86,24 +86,37 @@ public class MaxContribution {
 			recursive.put("maxContribution", (long) maxContribution);
 			recursive.put("time", end.getTime() - start.getTime());
 			recursive.put("iterationCount", cnt);
-			
-			
+
 			response.put("DIFF", diff);
 			response.put("MEMOIZED", memoized);
 			response.put("RECURSIVE", recursive);
 		}
 
+		if (start == null) {
+			Map<String, Long> resp = new HashMap<>();
+			resp.put("maxContribution", (long) maxContribution);
+			resp.put("time", 0L);
+			resp.put("iterationCount", 0L);
+			response.put("STRAIGHT", resp);
+		}
+
+		System.out.println("RESPONSE :: " + response);
+
 	}
 
-	private int memMaxContribution(int frontEndDev[], int backEndDev[], int frontEndDecsCount, int ind, Map<Integer, Integer> cache) {
+	private int memMaxContribution(int frontEndDev[], int backEndDev[], int frontEndDecsCount, int ind,
+			Map<Integer, Integer> cache) {
 		mcnt += 1;
 		if (ind > 0)
 			if (frontEndDecsCount > 0) {
 				int key = frontEndDecsCount * 19 + ind * 17;
 				Integer val = cache.get(key);
 				if (val == null) {
-					val = Math.max(frontEndDev[ind - 1] + memMaxContribution(frontEndDev, backEndDev, frontEndDecsCount - 1, ind - 1, cache),
-							backEndDev[ind - 1] + memMaxContribution(frontEndDev, backEndDev, frontEndDecsCount, ind - 1, cache));
+					val = Math.max(
+							frontEndDev[ind - 1] + memMaxContribution(frontEndDev, backEndDev, frontEndDecsCount - 1,
+									ind - 1, cache),
+							backEndDev[ind - 1]
+									+ memMaxContribution(frontEndDev, backEndDev, frontEndDecsCount, ind - 1, cache));
 					cache.put(key, val);
 				}
 				return val;
@@ -116,10 +129,11 @@ public class MaxContribution {
 	private int maxContribution(int frontEndDev[], int backEndDev[], int fontEndDevsCount, int ind) {
 		cnt += 1;
 		if (ind > 0)
-			if (fontEndDevsCount > 0)
-				return Math.max(frontEndDev[ind - 1] + maxContribution(frontEndDev, backEndDev, fontEndDevsCount - 1, ind - 1),
+			if (fontEndDevsCount > 0) {
+				return Math.max(
+						frontEndDev[ind - 1] + maxContribution(frontEndDev, backEndDev, fontEndDevsCount - 1, ind - 1),
 						backEndDev[ind - 1] + maxContribution(frontEndDev, backEndDev, fontEndDevsCount, ind - 1));
-			else
+			} else
 				return IntStream.range(0, ind).map(i -> backEndDev[i]).sum();
 		else
 			return 0;
