@@ -11,134 +11,118 @@ public class MaxContribution {
 
 	static long mcnt = 0;
 	static long cnt = 0;
-	static long cnt1 = 0;
 
 	public MaxContribution() {
 		
 	}
 
 	public static void main(String[] args) {
-		int fd[] = { 5, 7, 12, 6, 8, 4, 5, 13, 27 };
-		int bd[] = { 1, 3, 11, 2, 9, 3, 12, 13, 67 };
-		int fc = 5;
+		int frontEndDev[] = { 5, 7, 12, 6, 8, 4, 5, 13, 27 };
+		int backEndDev[] = { 1, 3, 11, 2, 9, 3, 12, 13, 67 };
+		int fontEndDevsCount = 5;
 
-		fd = new int[] { 6, 12, 19, 71, 42, 51, 12, 19, 15, 16, 41, 32, 9 };
-		bd = new int[] { 7, 15, 31, 46, 19, 72, 5, 61, 35, 17, 18, 42, 15 };
-		fc = 7;
+		frontEndDev = new int[] { 6, 12, 19, 71, 42, 51, 12, 19, 15, 16, 41, 32, 9 };
+		backEndDev = new int[] { 7, 15, 31, 46, 19, 72, 5, 61, 35, 17, 18, 42, 15 };
+		fontEndDevsCount = 7;
 
-		fd = new int[] { 6, 12, 19, 71, 42, 51 };
-		bd = new int[] { 7, 15, 31, 46, 19, 72 };
-		fc = 5;
+		frontEndDev = new int[] { 6, 12, 19, 71, 42, 51 };
+		backEndDev = new int[] { 7, 15, 31, 46, 19, 72 };
+		fontEndDevsCount = 5;
 
-		fd = new int[] { 5, 7, 12, 6 };
-		bd = new int[] { 1, 3, 18, 2 };
-		fc = 3;
+		frontEndDev = new int[] { 5, 7, 12, 6 };
+		backEndDev = new int[] { 1, 3, 18, 2 };
+		fontEndDevsCount = 3;
 
-		fd = new int[] { 5, 7, 12, 6 };
-		bd = new int[] { 1, 3, 11, 2 };
-		fc = 3;
+		frontEndDev = new int[] { 5, 7, 12, 6 };
+		backEndDev = new int[] { 1, 3, 11, 2 };
+		fontEndDevsCount = 3;
 
-		fd = new int[] { 6, 12, 19, 71, 42, 51, 12, 19, 15, 16, 41, 32, 9, 11, 12, 13, 19, 21, 71, 16, 78, 84, 51, 69 };
-		bd = new int[] { 7, 15, 31, 46, 19, 72, 5, 61, 35, 17, 18, 42, 15, 12, 51, 67, 39, 78, 85, 12, 31, 67, 28, 34 };
-		fc = 20;
+		frontEndDev = new int[] { 6, 12, 19, 71, 42, 51, 12, 19, 15, 16, 41, 32, 9, 11, 12, 13, 19, 21, 71, 16, 78, 84,
+				51, 69 };
+		backEndDev = new int[] { 7, 15, 31, 46, 19, 72, 5, 61, 35, 17, 18, 42, 15, 12, 51, 67, 39, 78, 85, 12, 31, 67,
+				28, 34 };
+		fontEndDevsCount = 20;
 
-		fd = new int[] { 6, 12, 19, 71, 42, 51, 12, 19, 15, 16, 41, 32, 9, 11, 12, 13, 19, 21, 71, 16, 78, 84, 51, 69,
-				7, 15, 31, 46, 19, 72, 5, 61, 35, 17, 18, 42, 15, 12, 51, 67, 39, 78, 85, 12, 31, 67, 28, 34 };
-		bd = new int[] { 7, 15, 31, 46, 19, 72, 5, 61, 35, 17, 18, 42, 15, 12, 51, 67, 39, 78, 85, 12, 31, 67, 28, 34,
-				6, 12, 19, 71, 42, 51, 12, 19, 15, 16, 41, 32, 9, 11, 12, 13, 19, 21, 71, 16, 78, 84, 51, 69 };
-		fc = 31;
+		frontEndDev = new int[] { 6, 12, 19, 71, 42, 51, 12, 19, 15, 16, 41, 32, 9, 11, 12, 13, 19, 21, 71, 16, 78, 84,
+				51, 69, 7, 15, 31, 46, 19, 72, 5, 61, 35, 17, 18, 42, 15, 12, 51, 67, 39, 78, 85, 12, 31, 67, 28, 34 };
+		backEndDev = new int[] { 7, 15, 31, 46, 19, 72, 5, 61, 35, 17, 18, 42, 15, 12, 51, 67, 39, 78, 85, 12, 31, 67,
+				28, 34, 6, 12, 19, 71, 42, 51, 12, 19, 15, 16, 41, 32, 9, 11, 12, 13, 19, 21, 71, 16, 78, 84, 51, 69 };
+		fontEndDevsCount = 31;
 
-		System.out.println(fd.length);
-		Date st = null;
+		Date start = null;
 		Date end = null;
-		int mc = 0;
-		int mmc = 0;
-		if (fd.length == fc)
-			mc = Arrays.stream(fd).sum();
-		else if (fc == 0)
-			mc = Arrays.stream(bd).sum();
+
+		Map<String, Object> response = new HashMap<>();
+
+		int maxContribution = 0;
+		int memMaxCont = 0;
+		if (frontEndDev.length == fontEndDevsCount)
+			maxContribution = Arrays.stream(frontEndDev).sum();
+		else if (fontEndDevsCount == 0)
+			maxContribution = Arrays.stream(backEndDev).sum();
 		else {
-			st = new Date();
-			mc = new MaxContribution().maxContributions(fd, bd, fc);
+			start = new Date();
+			maxContribution = new MaxContribution().maxContributionsDiff(frontEndDev, backEndDev, fontEndDevsCount);
 			end = new Date();
-			System.out.println(
-					"2.0 - DIFF || " + mc + " || Iter Count>> 0000 || TIME: " + (end.getTime() - st.getTime()));
+			Map<String, Long> diff = new HashMap<>();
+			diff.put("maxContribution", (long) maxContribution);
+			diff.put("time", end.getTime() - start.getTime());
+			diff.put("iterationCount", 0L);
 
-			st = new Date();
-			mmc = new MaxContribution().memMaxContribution(fd, bd, fc, fd.length, new HashMap<Integer, Integer>());
+			start = new Date();
+			memMaxCont = new MaxContribution().memMaxContribution(frontEndDev, backEndDev, fontEndDevsCount,
+					frontEndDev.length, new HashMap<Integer, Integer>());
 			end = new Date();
-			System.out.println("0.0 - MEMV || " + mmc + " || Iter Count>> " + mcnt + " || TIME: "
-					+ (end.getTime() - st.getTime()));
+			Map<String, Long> memoized = new HashMap<>();
+			memoized.put("maxContribution", (long) memMaxCont);
+			memoized.put("time", end.getTime() - start.getTime());
+			memoized.put("iterationCount", mcnt);
 
-			st = new Date();
-			mc = new MaxContribution().findMaxContributions(fd, 0, bd, fc);
+			start = new Date();
+			maxContribution = new MaxContribution().maxContribution(frontEndDev, backEndDev, fontEndDevsCount,
+					frontEndDev.length);
 			end = new Date();
-			System.out.println(
-					"1.0 - DPRS || " + mc + " || Iter Count>> " + cnt1 + " || TIME: " + (end.getTime() - st.getTime()));
-			st = new Date();
-			mc = new MaxContribution().maxContribution(fd, bd, fc, fd.length);
-			end = new Date();
-			System.out.println(
-					"0.1 - DPRV || " + mc + " || Iter Count>> " + cnt + " || TIME: " + (end.getTime() - st.getTime()));
+			Map<String, Long> recursive = new HashMap<>();
+			recursive.put("maxContribution", (long) maxContribution);
+			recursive.put("time", end.getTime() - start.getTime());
+			recursive.put("iterationCount", cnt);
+			
+			
+			response.put("DIFF", diff);
+			response.put("MEMOIZED", memoized);
+			response.put("RECURSIVE", recursive);
 		}
 
 	}
 
-	private int memMaxContribution(int fd[], int bd[], int fc, int ind, Map<Integer, Integer> cache) {
+	private int memMaxContribution(int frontEndDev[], int backEndDev[], int frontEndDecsCount, int ind, Map<Integer, Integer> cache) {
 		mcnt += 1;
 		if (ind > 0)
-			if (fc > 0) {
-				int key = fc * 19 + ind * 17;
+			if (frontEndDecsCount > 0) {
+				int key = frontEndDecsCount * 19 + ind * 17;
 				Integer val = cache.get(key);
 				if (val == null) {
-					val = Math.max(fd[ind - 1] + memMaxContribution(fd, bd, fc - 1, ind - 1, cache),
-							bd[ind - 1] + memMaxContribution(fd, bd, fc, ind - 1, cache));
+					val = Math.max(frontEndDev[ind - 1] + memMaxContribution(frontEndDev, backEndDev, frontEndDecsCount - 1, ind - 1, cache),
+							backEndDev[ind - 1] + memMaxContribution(frontEndDev, backEndDev, frontEndDecsCount, ind - 1, cache));
 					cache.put(key, val);
 				}
 				return val;
 			} else
-				return IntStream.range(0, ind).map(i -> bd[i]).sum();
+				return IntStream.range(0, ind).map(i -> backEndDev[i]).sum();
 		else
 			return 0;
 	}
 
-	private int maxContribution(int fd[], int bd[], int fc, int ind) {
+	private int maxContribution(int frontEndDev[], int backEndDev[], int fontEndDevsCount, int ind) {
 		cnt += 1;
 		if (ind > 0)
-			if (fc > 0) {
-				return Math.max(fd[ind - 1] + maxContribution(fd, bd, fc - 1, ind - 1),
-						bd[ind - 1] + maxContribution(fd, bd, fc, ind - 1));
-			} else
-				return IntStream.range(0, ind).map(i -> bd[i]).sum();
+			if (fontEndDevsCount > 0)
+				return Math.max(frontEndDev[ind - 1] + maxContribution(frontEndDev, backEndDev, fontEndDevsCount - 1, ind - 1),
+						backEndDev[ind - 1] + maxContribution(frontEndDev, backEndDev, fontEndDevsCount, ind - 1));
+			else
+				return IntStream.range(0, ind).map(i -> backEndDev[i]).sum();
 		else
 			return 0;
-	}
-
-	private int findMaxContributions(int[] frontEndContributions, int currentIndex, int[] backEndContributions,
-			int noOfFrontEnd) {
-		cnt1 += 1;
-		int size = frontEndContributions.length;
-		if (currentIndex >= size) {
-			return 0;
-		}
-		if (noOfFrontEnd == size) {
-			return sum(frontEndContributions, currentIndex);
-		}
-		if (noOfFrontEnd == 0) {
-			return sum(backEndContributions, currentIndex);
-		}
-		return Math.max(
-				frontEndContributions[currentIndex] + findMaxContributions(frontEndContributions, currentIndex + 1,
-						backEndContributions, noOfFrontEnd - 1),
-				backEndContributions[currentIndex] + findMaxContributions(frontEndContributions, currentIndex + 1,
-						backEndContributions, noOfFrontEnd));
-	}
-
-	private int sum(int[] array, int index) {
-		int sum = 0;
-		for (int i = index; i < array.length; i++)
-			sum += array[i];
-		return sum;
 	}
 
 	private class Tuple {
@@ -159,7 +143,7 @@ public class MaxContribution {
 		}
 	}
 
-	int maxContributions(int[] frontEndContributions, int[] backEndContributions, int noOfFrontEnd) {
+	int maxContributionsDiff(int[] frontEndContributions, int[] backEndContributions, int noOfFrontEnd) {
 		List<Tuple> developers = new ArrayList<>();
 		for (int i = 0; i < frontEndContributions.length; i++)
 			developers.add(new Tuple(frontEndContributions[i], backEndContributions[i]));
