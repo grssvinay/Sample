@@ -1,5 +1,3 @@
-package com.tw.rough;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
